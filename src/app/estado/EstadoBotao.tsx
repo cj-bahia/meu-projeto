@@ -1,7 +1,9 @@
 "use client"; // o NextJs usa por padrão Server Side e precisamos que o arquivo seja Client Side
 
+import Botao from "@/components/Botao";
+import Tempo from "@/components/Tempo";
+
 import { useState } from "react"; // importa a função useState do react
-import Botao from "../../../components/botao";
 
 export default function EstadoPage() { // Componente principal
     // Estado para controlar o texto do botão
@@ -26,6 +28,7 @@ export default function EstadoPage() { // Componente principal
             <Botao texto = {ativo ? "Desativar" : "Ativar"} propsAltEstado = {alternarEstado} propsEstado = {ativo} /> {/*Botão importado do componente*/}
             <p>🔹Botão ativado {contAtivo} vezes</p>
             <p>🔸Botão desativado {contDesativo} vezes</p>
+            <Tempo />
         </div>
     );
 }
