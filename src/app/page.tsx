@@ -1,22 +1,30 @@
+"use client";
+import { useEffect, useState } from "react";
 import EstadoPage from "./estado/EstadoBotao";
 
-export default async function Home() {
-  const res = await fetch("https://jsonplaceholder.typicode.com/users", { cache: "no-store"});
+interface Usuario {
+  id: number;
+  nome: string;
+}
 
-  if (!res.ok) {
-    throw new Error("Erro ao buscar usuários");
-  }
+export default function Home() {
+  const [usuarios, setUsuarios] = useState<Usuario[]>([]);
 
-  const users: { id: number; name: string }[] = await res.json();
+  useEffect(() => {
+    fetch("/api/usuarios")
+      .then((res) => res.json())
+      .then((data: Usuario[]) => setUsuarios(data))
+      .catch((error) => console.error("Erro ao buscar usuários:", error));
+  }, []); 
 
   return (
     <div>
       <h1>Página Inicial</h1>
       <EstadoPage/>
-      <h2>Usuários</h2>
+      <h2>Lista de Usuários</h2>
       <ul>
-        {users.map((user) => (
-          <li key={user.id}>{user.name}</li>
+        {usuarios.map((user) => (
+          <li key={user.id}>{user.nome}</li>
         ))}
       </ul>
     </div>
